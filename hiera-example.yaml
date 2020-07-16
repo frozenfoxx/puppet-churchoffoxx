@@ -1,0 +1,38 @@
+---
+apache::default_mods:        false
+apache::default_confd_files: false
+apache::default_vhost:       false
+apache::mpm_module:          'prefork'
+apache::server_signature:    'Off'
+apache::server_tokens:       'Prod'
+websites:
+  'fqdn.net':
+    port:                    443
+    default_vhost:           true
+    ssl:                     true
+    ssl_chain:               '/etc/ssl/certs/chain.provider.ca.pem'
+    ssl_cert:                '/etc/ssl/certs/fqdn.cert'
+    ssl_key:                 '/etc/ssl/private/fqdn.key'
+    ssl_protocol:            'all -SSLv2 -SSLv3'
+    docroot:                 '/path/to/docroot'
+    docroot_owner:           'apache-user'
+    docroot_group:           'apache-user'
+    directories:
+      path:                  '/path/to/docroot'
+      provider:              'directory'
+      options:               ['+Indexes','-FollowSymLinks','+MultiViews']
+  'prefix.fqdn.net':
+    port:                    443
+    ssl:                     true
+    ssl_chain:               '/etc/ssl/certs/chain.provider.ca.pem'
+    ssl_cert:                '/etc/ssl/certs/prefix.fqdn.cert'
+    ssl_key:                 '/etc/ssl/private/prefix.fqdn.key'
+    ssl_protocol:            'all -SSLv2 -SSLv3'
+    docroot:                 '/path/to/other/docroot'
+    docroot_owner:           'apache-user'
+    docroot_group:           'apache-user'
+    directories:
+      path:                  '/path/to/other/docroot'
+      provider:              'directory'
+      options:               ['-Indexes','-FollowSymLinks','+MultiViews']
+mysql::root_password:        'plaintextpassword'
