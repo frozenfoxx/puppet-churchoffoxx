@@ -1,3 +1,14 @@
+# Deploy a live GCE builder host
+
+class role::builder::gce::live {
+  include profile::base
+  include profile::docker::jenkins::gce
+  include profile::fail2ban
+  include profile::hosts
+  include profile::htop
+  include profile::unattendedupgrades
+}
+
 # Deploy a live Jenkins vSphere host
 
 class role::jenkins::vsphere::live {
