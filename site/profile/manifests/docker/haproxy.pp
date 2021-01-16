@@ -15,7 +15,6 @@ class profile::docker::haproxy {
     net              => ['host'],
     volumes          => ["${data_dir}/haproxy/:/data"],
     command          => '-f /data',
-    extra_parameters => [ '--network host' ],
     require          => File["${data_dir}/haproxy"],
     restart_service  => true
   }
