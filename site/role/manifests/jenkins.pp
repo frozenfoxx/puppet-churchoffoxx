@@ -1,4 +1,4 @@
-# Deploy a live GCE builder host
+# Deploy a live Jenkins GCE host
 
 class role::builder::gce::live {
   include profile::base
