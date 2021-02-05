@@ -18,6 +18,7 @@ class profile::docker::jenkins::vsphere {
   ]
   $jenkins_home       = lookup('assets::jenkins::jenkins_home')
   $masterkey          = lookup('assets::jenkins::masterkey')
+  $nodemonitors       = lookup('assets::jenkins::nodemonitors')
   $secretkey          = lookup('assets::jenkins::secretkey')
   $uid                = lookup('assets::jenkins::uid')
 
@@ -35,6 +36,7 @@ class profile::docker::jenkins::vsphere {
     ],
     require         => [
       File['jenkins.yml'],
+      File['nodeMonitors.xml'],
       File['secret.key'],
       File['master.key'],
       File['hudson.util.Secret']
@@ -60,6 +62,18 @@ class profile::docker::jenkins::vsphere {
     replace => no,
     content => $config,
     require => File["${data_dir}/jenkins/casc_configs"]
+  }
+
+  # Roll out a nodeMonitors.xml if none exists
+  file { 'nodeMonitors.xml':
+    ensure  => file,
+    path    => "${data_dir}/jenkins/jenkins_home/nodeMonitors.xml",
+    owner   => $uid,
+    group   => $gid,
+    mode    => '0644',
+    replace => no,
+    content => $nodemonitors,
+    require => File["${data_dir}/jenkins/jenkins_home"]
   }
 
   # Roll out a secret.key if none exists
