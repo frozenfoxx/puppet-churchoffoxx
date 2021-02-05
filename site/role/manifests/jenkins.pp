@@ -22,7 +22,7 @@ class role::jenkins::vsphere::live {
 
 # Prepare a Jenkins vSphere host in Packer
 
-class role::jenkins::vsphere::packer {
+class role::jenkins::packer {
   include profile::base
   include profile::docker::install
   include profile::fail2ban
